@@ -60,11 +60,11 @@
                     </a>
                 </li>
                 <li class="menu-section">
-                    <h4 class="menu-text">Referensi</h4>
+                    <h4 class="menu-text">Verifikasi Dokumen</h4>
                     <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                 </li>
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                    <a href="javascript:;" class="menu-link menu-toggle">
+                    <a href="dashboard" class="menu-link menu-toggle">
                         <span class="svg-icon menu-icon">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -79,36 +79,9 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">Sekolah</span>
-                        <i class="menu-arrow"></i>
+                        <span class="menu-text">Dokumen</span>
                     </a>
-                    <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-                            <li class="menu-item menu-item-parent" aria-haspopup="true">
-                                <span class="menu-link">
-                                    <span class="menu-text">Sekolah</span>
-                                </span>
-                            </li>
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="sekolah" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-line">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">Identitas</span>
-                                </a>
-                            </li>
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="inputsekolah" class="menu-link menu-toggle">
-                                    <i class="menu-bullet menu-bullet-line">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">Profile</span>
-                                </a>
-                            </li>
 
-                        </ul>
-                    </div>
                 </li>
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
