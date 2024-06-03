@@ -8,5 +8,5 @@ use CodeIgniter\Router\RouteCollection;
 // $routes->get('/', 'Home::index');
 $routes->get('dashboard', 'Aplikasi\DashboardController::index');
 $routes->get('unggahdokumen', 'Aplikasi\DokumenUpload::index');
-$routes->get('datadokumen', 'Aplikasi\DokumenUpload::datadokumen');
+$routes->get('datadokumen', 'Aplikasi\DokumenUpload::getDataDokumen');
 $routes->post('unggahdokumen/import', 'Aplikasi\DokumenUpload::import');

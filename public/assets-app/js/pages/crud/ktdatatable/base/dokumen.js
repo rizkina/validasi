@@ -55,25 +55,28 @@ var KTDatatableDataLocalDemo = function() {
             }, {
                 field: 'DocNo',
                 title: 'No',
+                width: 30,
             }, {
                 field: 'NamaDokumen',
                 title: 'Nama Dokumen',
+                width: 500,
             }, {
                 field: 'StatusDok',
                 title: 'Status',
+                width: 125,
                 // callback function support for column rendering
                 template: function(row) {
                     var status = {
-                        1: {
+                        "Aktif": {
                             'title': 'Aktif',
                             'class': ' label-light-success'
                         },
-                        2: {
+                        "Tidak": {
                             'title': 'Tidak Aktif',
                             'class': ' label-light-danger'
                         },
                     };
-                    return '<span class="label font-weight-bold label-lg ' + status[row.Status].class + ' label-inline">' + status[row.Status].title + '</span>';
+                    return '<span class="label font-weight-bold label-lg ' + status[row.StatusDok].class + ' label-inline">' + status[row.StatusDok].title + '</span>';
                 },
             }, {
                 field: 'Actions',
@@ -113,7 +116,7 @@ var KTDatatableDataLocalDemo = function() {
         });
 
         $('#kt_datatable_search_status').on('change', function() {
-            datatable.search($(this).val().toLowerCase(), 'Status');
+            datatable.search($(this).val().toLowerCase(), 'StatusDok');
         });
 
         $('#kt_datatable_search_type').on('change', function() {

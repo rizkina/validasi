@@ -4,59 +4,99 @@ namespace App\Controllers\Aplikasi;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
-use App\Models\JenisDocumentModel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\Models\JenisDocumentModel;
 
 
 class DokumenUpload extends BaseController
 {
     public function index()
     {
-        return view('aplikasi/referensi/dokumen');
+        // Load JenisDocumentModel and call the method to get distinct 'StatusDok' values
+        $statusValues = $this->dokumenModel->getStatus();
+
+        // Pass the retrieved 'Status' values to the view
+        $data['statusValues'] = $statusValues;
+
+
+        return view('aplikasi/referensi/dokumen', $data);
     }
 
     public function import()
     {
         $file = $this->request->getFile('fileexcel');
-
         if ($file->isValid() && !$file->hasMoved()) {
-            $spreadsheet = IOFactory::load($file->getTempName());
-            $sheetData = $spreadsheet->getActiveSheet()->toArray();
+            $ext = $file->getClientExtension();
 
-            $jenisDocumentModel = new JenisDocumentModel();
-
-            foreach ($sheetData as $key => $data) {
-                if ($key == 0) {
-                    continue; // Skip header row
-                }
-
-                $insertData = [
-                    'DocNo' => $data[0],
-                    'NamaDokumen' => $data[1],
-                ];
-
-                // Optionally add StatusDok if it exists in the Excel file
-                if (isset($data[2])) {
-                    $insertData['StatusDok'] = $data[2];
-                }
-
-                $jenisDocumentModel->insert($insertData);
+            if ($ext === 'xls') {
+                $render = IOFactory::createReader('Xls');
+            } else {
+                $render = IOFactory::createReader('Xlsx');
             }
 
-            return redirect()->to('/unggahdokumen')->with('message', 'Data imported successfully.');
+            $spreadsheet = $render->load($file->getTempName());
+            $data = $spreadsheet->getActiveSheet()->toArray();
+
+            $successAdded = 0;
+            $successUpdated = 0;
+            $failCount = 0;
+
+            foreach ($data as $x => $row) {
+                if ($x == 0) { // Skip header row
+                    continue;
+                }
+                $NoDoc = $row[0];
+                $NamaDokumen = $row[1];
+                $StatusDok = $row[2] ?? 'Aktif'; // Optional third column
+
+                $dokumen = $this->dokumenModel->cekDokumenByNo($NoDoc);
+
+                if ($dokumen) {
+                    $affectedRows = $this->dokumenModel->update($dokumen->DocNo, [
+                        'DocNo' => $NoDoc,
+                        'NamaDokumen' => $NamaDokumen,
+                        'StatusDok' => $StatusDok
+                    ]);
+
+                    if ($affectedRows > 0) {
+                        $successUpdated++;
+                    } else {
+                        $failCount++;
+                    }
+                } else {
+                    $simpanDokumen = [
+                        'DocNo' => $NoDoc,
+                        'NamaDokumen' => $NamaDokumen,
+                        'StatusDok' => $StatusDok
+                    ];
+
+                    if ($this->dokumenModel->insert($simpanDokumen)) {
+                        $successAdded++;
+                    } else {
+                        $failCount++;
+                    }
+                }
+            }
+
+            session()->setFlashdata('pesan', 'Data Baru: ' . $successAdded . ', data diperbaharui: ' . $successUpdated . ', data gagal: ' . $failCount . ' import dari file excel.');
+
+            return redirect()->back();
         } else {
-            return redirect()->to('/unggahdokumen')->with('message', 'Please select a valid Excel file.');
+            session()->setFlashdata('pesan', 'Please select a valid Excel file.');
+            return redirect()->back();
         }
     }
 
-    public function datadokumen()
+    public function getDataDokumen()
     {
-        $model = new JenisDocumentModel();
+        $data = $this->dokumenModel->findAll();
 
         // Fetch all records from the table
-        $data = $model->findAll();
+        // $data = $model->findAll();
 
         // Return data as JSON
-        return $this->respond($data);
+        return $this->response->setJSON($data);
     }
 }
