@@ -7,3 +7,4 @@ use CodeIgniter\Router\RouteCollection;
  */
 // $routes->get('/', 'Home::index');
 $routes->get('dashboard', 'Aplikasi\DashboardController::index');
+$routes->get('unggahdokumen', 'Aplikasi\DokumenUpload::index');

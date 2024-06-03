@@ -147,7 +147,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <!--end::Demo Panel https://keenthemes.com/metronic/tools/preview-->
     <script>
-        var HOST_URL = "asset-layout/assets";
+        var HOST_URL = "assets-app";
     </script>
     <!--begin::Global Config(global config for global JS scripts)-->
     <script>
@@ -216,16 +216,18 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="assets-app/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.4">
     </script>
     <script src="assets-app/js/scripts.bundle.js?v=7.0.4"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> -->
     <!--end::Global Theme Bundle-->
     <!--begin::Page Vendors(used by this page)-->
-    <script src="assets-app/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.4">
-    </script>
+    <!-- <script src="assets-app/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.4">
+    </script> -->
     <!--end::Page Vendors-->
     <!--begin::Page Scripts(used by this page)-->
-    <script src="assets-app/js/pages/widgets.js?v=7.0.4"></script>
+    <!-- <script src="assets-app/js/pages/widgets.js?v=7.0.4"></script> -->
     <!--end::Page Scripts-->
     <!--Script::Table-->
-    
+    <!-- <script src="assets-app/js/pages/crud/ktdatatable/base/data-local.js?v=7.0.4"></script> -->
+    <?= $this->renderSection('scripts') ?>
 </body>
 <!--end::Body-->
 
