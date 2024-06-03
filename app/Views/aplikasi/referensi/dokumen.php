@@ -27,6 +27,23 @@
                                 <!--begin::Form-->
                                 <form>
                                     <div class="card-body">
+                                        <!-- alert import success -->
+										<?php if (session()->getFlashdata('pesan')) : ?>
+											<div class="alert alert-custom alert-success fade show mb-2" role="alert">
+												<div class="alert-icon">
+													<i class="flaticon-warning"></i>
+												</div>
+												<div class="alert-text"><?= session()->getFlashdata('pesan'); ?></div>
+												<div class="alert-close">
+													<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+														<span aria-hidden="true">
+															<i class="ki ki-close"></i>
+														</span>
+													</button>
+												</div>
+											</div>
+
+										<?php endif; ?>
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label text-lg-right">Upload File:</label>
                                             <button type="button" class="btn btn-light-primary font-weight-bolder" data-toggle="modal" data-target="#uploadExcelModal" aria-haspopup="true" aria-expanded="false">
@@ -61,7 +78,7 @@
                                                         <hr>
                                                         <h8>Silakan klik tombol "Browse" untuk mengunggah file excel</h8>
                                                         <p>
-                                                            <form method="post" action="#" enctype="multipart/form-data">
+                                                            <form method="post" action="unggahdokumen/import" enctype="multipart/form-data">
                                                                 <div class="form-group">
                                                                     <label>File Excel</label>
                                                                     <input type="file" name="fileexcel" class="form-control" id="file" required accept=".xls, .xlsx" /></p>
@@ -143,5 +160,6 @@
 <!--end::Content-->
 <?= $this->endSection(); ?>
 <?= $this->section('scripts') ?>
-<script src="assets-app/js/pages/crud/ktdatatable/base/data-local.js?v=7.0.4"></script>
+<!-- <script src="assets-app/js/pages/crud/ktdatatable/base/data-local.js?v=7.0.4"></script> -->
+<script src="assets-app/js/pages/crud/ktdatatable/base/dokumen.js"></script>
 <?= $this->endSection() ?>
