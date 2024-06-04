@@ -51,4 +51,10 @@ class JenisDocumentModel extends Model
             return false;
         }
     }
+
+    public function getDataDokumenByStatus($status)
+    {
+        // Fetch records where 'status' equals the specified value
+        return $this->where('StatusDok', $status)->findAll();
+    }
 }
