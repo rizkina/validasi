@@ -305,4 +305,16 @@ class DokumenUpload extends BaseController
         // Return data as JSON
         return $this->response->setJSON($data);
     }
+
+    public function getData($id)
+    {
+        // Fetch the document by ID
+        $document = Document::find($id);
+
+        if ($document) {
+            return response()->json($document);
+        } else {
+            return response()->json(['error' => 'Document not found'], 404);
+        }
+    }
 }

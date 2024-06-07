@@ -241,6 +241,46 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel">Edit Document</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="editForm">
+                                                <div class="form-group">
+                                                    <label for="docNo">Document No</label>
+                                                    <input type="text" class="form-control" id="docNo" name="DocNo">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="namaDokumen">Nama Dokumen</label>
+                                                    <input type="text" class="form-control" id="namaDokumen" name="NamaDokumen">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="statusDok">Status</label>
+                                                    <input type="text" class="form-control" id="statusDok" name="StatusDok">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" onclick="submitEditForm()">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                            function submitEditForm() {
+                                // Submit the form via AJAX or perform any necessary actions
+                            }
+                            </script>
+
                             <!--end::Search Form-->
                             <!--end: Search Form-->
                             <!--begin: Datatable-->
@@ -351,10 +391,10 @@ var KTDatatableDataLocalDemo = function() {
                 width: 125,
                 overflow: 'visible',
                 autoHide: false,
-                template: function() {
+                template: function(row) {
                     return '\
 							\
-							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">\
+							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" title="Edit details">\
 	                            <span class="svg-icon svg-icon-md">\
 	                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">\
 	                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\
@@ -387,6 +427,26 @@ var KTDatatableDataLocalDemo = function() {
 
 
         $('#kt_datatable_search_status').selectpicker();
+
+        $(document).on('click', '[data-toggle="modal"]', function() {
+        var id = $(this).data('id');
+        // Open the modal and populate it with data from the selected row
+        $.ajax({
+        url: 'getdata/' + id,
+        method: 'GET',
+        success: function(data) {
+            // Assuming you have input fields in your modal with IDs 'docNo', 'namaDokumen', 'statusDok'
+            $('#editModal #docNo').val(data.DocNo);
+            $('#editModal #namaDokumen').val(data.NamaDokumen);
+            $('#editModal #statusDok').val(data.StatusDok);
+            $('#editModal').modal('show');
+        },
+        error: function(err) {
+            alert('Failed to fetch data.');
+        }
+    });
+});
+
     };
 
     return {
